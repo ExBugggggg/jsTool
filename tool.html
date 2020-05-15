@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Excellent Tools</title>
+  </head>
+  <body>
+    <div class="container">
+    	<ul class="nav nav-tabs">
+            <!--Timestamp tab-->
+    		<li class="nav-item">
+    			<a class="nav-link active" id="timestamp_tab" data-toggle="tab" href="#timestamp_panel" role="tab" aria-controls="timestamp_panel" aria-selected="true">Timestamp Transfer</a>
+    		</li>
+            <!--Variable tab-->
+    		<li class="nav-item">
+    			<a class="nav-link" id="variable_tab" data-toggle="tab" href="#variable_panel" role="tab" aria-controls="variable_panel" aria-selected="false">Variable Transfer</a>
+    		</li>
+    	</ul>
+    	<!--Tab Content-->
+    	<div class="tab-content" id="tab_content">
+    		<!--Timestamp transfer panel-->
+    		<div class="tab-pane fade show active" id="timestamp_panel" role="tabpanel" aria-labelledby="home-tab">
+    			<div class="col-md-10 col-md-offset-1">
+    				<div class="row" style="height: 40px"></div>
+	    			<form id="date_transfer_form">
+	    				<div class="form-group row">
+    						<div class="col-md-1"></div>
+    						<label class="col-md-4 col-form-label" style="color:#005344">
+    							<h5>时间转换</h5>
+    						</label>
+    					</div>
+						<div class="form-group row">
+							<div class="col-md-1"></div>
+							<label for="timestamp_src" class="col-md-2 col-form-label">时间戳:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" id="timestamp_src">
+							</div>
+							<button class="btn btn-primary col-md-1" type="button" id="timestamp_transfer">转换</button>
+							<div class="col-md-4">
+								<input type="text" class="form-control" id="timestamp_des">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-1"></div>
+							<label for="date_src" class="col-md-2 col-form-label">日期:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" id="date_src">
+							</div>
+							<button class="btn btn-primary col-md-1" type="button" id="date_transfer">转换</button>
+							<div class="col-md-4">
+								<input type="text" class="form-control" id="date_des">
+							</div>
+						</div>
+	    			</form>
+	    		</div>
+    		</div>
+
+    		<!--Variable transfer panel-->
+    		<div class="tab-pane fade" id="variable_panel" role="tabpanel" aria-labelledby="home-tab">
+    			<div class="col-md-10 col-md-offset-1">
+    				<div class="row" style="height: 40px"></div>
+    				<form id="variable_transfer_form">
+    					<div class="form-group row">
+    						<div class="col-md-1"></div>
+    						<label class="col-md-4 col-form-label" style="color:#005344">
+    							<h5>驼峰命名转连字符</h5>
+    						</label>
+    					</div>
+    					<div class="form-group row">
+    						<div class="col-md-1"></div>
+    						<label for="camelcase_src" class="col-md-2 col-form-label">变量名:</label>
+    						<div class="col-md-4">
+    							<input type="text" class="form-control" id="camelcase_src">
+    						</div>
+    						<button class="btn btn-primary col-md-1" type="button" id="camelcase_transfer">转换</button>
+    						<div class="col-md-4">
+    							<input type="text" class="form-control" id="camelcase_des">
+    						</div>
+    					</div>
+    				</form>
+    			</div>
+    		</div>
+
+    	</div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		// value defind
+    		var mill_timestamp = new Date();
+    		var timestamp = Math.round(mill_timestamp/1000);
+
+    		// initialize value
+    		$('#timestamp_src').val(timestamp);
+    		$('#date_src').val(timestamp_to_date(timestamp));
+
+    		// button event
+    		$('#timestamp_transfer').click(function(){
+    			var timestamp_val = $('#timestamp_src').val();
+    			$('#timestamp_des').val(timestamp_to_date(timestamp_val));
+    		});
+
+    		$('#date_transfer').click(function(){
+    			var date_val = $('#date_src').val();
+    			$('#date_des').val(date_to_timestamp(date_val));
+    		});
+
+    		$('#camelcase_transfer').click(function(){
+    			var camelcase_val = $('#camelcase_src').val();
+    			$('#camelcase_des').val(camelcase_to_hyphencase(camelcase_val));
+    		});
+    	});
+
+    	// Transfer timestamp to date
+    	function timestamp_to_date(timestamp_val){
+    		timestamp_val = timestamp_val * 1000;
+    		var date = new Date(timestamp_val);
+    		var year = date.getFullYear();
+    		var month = date.getMonth() + 1;
+    		var day = date.getDate();
+    		var hour = date.getHours();
+    		var min = date.getMinutes();
+    		var sec = date.getSeconds();
+
+    		var format_time = year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
+    		return format_time;
+    	}
+
+    	// Transfer date to timestamp
+    	function date_to_timestamp(date_val){
+    		var date = new Date(date_val);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var concat_date = '';
+            if(year < 1970){
+                bootbox.alert("Wrong year!");
+                return ;
+            }
+            if(date_val.length <= 10){
+                concat_date = year + '-' + month + '-' + day;
+                date = new Date(concat_date);
+            }
+    		var time = date.getTime() / 1000;
+            if(isNaN(time)){
+                bootbox.alert("Wrong date format!");
+                return ;
+            }
+    		return time;
+    	}
+
+    	// Transfer camelcase to hyphencase
+    	function camelcase_to_hyphencase(camelcase_val){
+    		var camelcase_array = camelcase_val.split('');
+    		var hyphen_str = '';
+    		for(var x in camelcase_array){
+                if(x == 0 && /^[A-Z]+$/.test(camelcase_array[x])){
+                    hyphen_str = camelcase_array[x].toLowerCase();
+                }else{
+                    if(/^[A-Z]+$/.test(camelcase_array[x])){
+                        hyphen_str = hyphen_str + '-' + camelcase_array[x].toLowerCase();
+                    }else{
+                        hyphen_str = hyphen_str + camelcase_array[x];
+                    }
+                }
+    		}
+    		return hyphen_str;
+    	}
+    </script>
+  </body>
+</html>
