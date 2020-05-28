@@ -15,25 +15,39 @@
     	<ul class="nav nav-tabs">
             <!--Timestamp tab-->
     		<li class="nav-item">
-    			<a class="nav-link active" id="timestamp_tab" data-toggle="tab" href="#timestamp_panel" role="tab" aria-controls="timestamp_panel" aria-selected="true">Timestamp Transfer</a>
+    			<a class="nav-link active" id="timestamp_tab" data-toggle="tab" href="#timestamp_panel" role="tab" aria-controls="timestamp_panel" aria-selected="true">Timestamp convert</a>
     		</li>
             <!--Variable tab-->
     		<li class="nav-item">
-    			<a class="nav-link" id="variable_tab" data-toggle="tab" href="#variable_panel" role="tab" aria-controls="variable_panel" aria-selected="false">Variable Transfer</a>
+    			<a class="nav-link" id="variable_tab" data-toggle="tab" href="#variable_panel" role="tab" aria-controls="variable_panel" aria-selected="false">Variable convert</a>
+    		</li>
+    		<!--Encrypt tab-->
+    		<li class="nav-item">
+    			<a class="nav-link" id="variable_tab" data-toggle="tab" href="#encrypt_panel" role="tab" aria-controls="encrypt_panel" aria-selected="false">Encrypt</a>
     		</li>
     	</ul>
     	<!--Tab Content-->
     	<div class="tab-content" id="tab_content">
-    		<!--Timestamp transfer panel-->
+    		<!--Timestamp convert panel-->
     		<div class="tab-pane fade show active" id="timestamp_panel" role="tabpanel" aria-labelledby="home-tab">
     			<div class="col-md-10 col-md-offset-1">
     				<div class="row" style="height: 40px"></div>
-	    			<form id="date_transfer_form">
+	    			<form id="date_convert_form">
 	    				<div class="form-group row">
     						<div class="col-md-1"></div>
     						<label class="col-md-4 col-form-label" style="color:#005344">
     							<h5>时间转换</h5>
     						</label>
+    					</div>
+    					<div class="form-group row">
+    						<div class="col-md-1"></div>
+    						<label for="current_time" class="col-md-2 col-form-label">当前时间:</label>
+    						<div class="col-md-3">
+    							<label class="col-form-label" id="current_time"></label>
+    						</div>
+    						<div class="col-md-3">
+    							<label class="col-form-label" id="current_time_format"></label>
+    						</div>
     					</div>
 						<div class="form-group row">
 							<div class="col-md-1"></div>
@@ -41,7 +55,7 @@
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="timestamp_src">
 							</div>
-							<button class="btn btn-primary col-md-1" type="button" id="timestamp_transfer">转换</button>
+							<button class="btn btn-primary col-md-1" type="button" id="timestamp_convert">转换</button>
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="timestamp_des">
 							</div>
@@ -52,7 +66,7 @@
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="date_src">
 							</div>
-							<button class="btn btn-primary col-md-1" type="button" id="date_transfer">转换</button>
+							<button class="btn btn-primary col-md-1" type="button" id="date_convert">转换</button>
 							<div class="col-md-4">
 								<input type="text" class="form-control" id="date_des">
 							</div>
@@ -61,11 +75,11 @@
 	    		</div>
     		</div>
 
-    		<!--Variable transfer panel-->
+    		<!--Variable convert panel-->
     		<div class="tab-pane fade" id="variable_panel" role="tabpanel" aria-labelledby="home-tab">
     			<div class="col-md-10 col-md-offset-1">
     				<div class="row" style="height: 40px"></div>
-    				<form id="variable_transfer_form">
+    				<form id="variable_convert_form">
     					<div class="form-group row">
     						<div class="col-md-1"></div>
     						<label class="col-md-4 col-form-label" style="color:#005344">
@@ -78,7 +92,7 @@
     						<div class="col-md-4">
     							<input type="text" class="form-control" id="camelcase_src">
     						</div>
-    						<button class="btn btn-primary col-md-1" type="button" id="camelcase_transfer">转换</button>
+    						<button class="btn btn-primary col-md-1" type="button" id="camelcase_convert">转换</button>
     						<div class="col-md-4">
     							<input type="text" class="form-control" id="camelcase_des">
     						</div>
@@ -87,6 +101,42 @@
     			</div>
     		</div>
 
+            <!--Encrypt panel-->
+            <div class="tab-pane fade" id="encrypt_panel" role="tabpanel" aria-labelledby="home-tab">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row" style="height: 40px"></div>
+                    <form id="encrypt_form">
+                        <div class="form-group row">
+                            <div class="col-md-1"></div>
+                            <label class="col-md-4 col-form-label" style="color:#005344">
+                                <h5>MD5加密</h5>
+                            </label>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-1"></div>
+                            <label for="unencrypted_str" class="col-md-3 col-form-label">待加密字符串:</label>
+                            <div class="col-md-4">
+                            	<input type="text" class="form-control" id="unencrypted_str">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                        	<div class="col-md-1"></div>
+                            <label for="salt_str" class="col-md-3 col-form-label">盐:</label>
+                            <div class="col-md-4">
+                            	<input type="text" class="form-control" id="salt_str">
+                            </div>
+                            <button class="col-md-1 btn btn-primary" type="button" id="md5_encrypt">加密</button>
+               		 	</div>
+               		 	<div class="form-group row">
+               		 		<div class="col-md-1"></div>
+               		 		<label for="encrypt_content" class="col-md-2 col-form-label">加密结果:</label>
+               		 		<div class="col-md-9">
+               		 			<textarea class="form-control" id="encrypt_content" rows="10"></textarea>
+               		 		</div>
+               		 	</div>
+                    </form>
+                </div>
+            </div>
     	</div>
     </div>
 
@@ -96,34 +146,52 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
     <script>
     	$(document).ready(function(){
-    		// value defind
-    		var mill_timestamp = new Date();
-    		var timestamp = Math.round(mill_timestamp/1000);
-
-    		// initialize value
-    		$('#timestamp_src').val(timestamp);
-    		$('#date_src').val(timestamp_to_date(timestamp));
+    		
+    		// do initialize
+    		component_init();
 
     		// button event
-    		$('#timestamp_transfer').click(function(){
+    		$('#timestamp_convert').click(function(){
     			var timestamp_val = $('#timestamp_src').val();
     			$('#timestamp_des').val(timestamp_to_date(timestamp_val));
     		});
 
-    		$('#date_transfer').click(function(){
+    		$('#date_convert').click(function(){
     			var date_val = $('#date_src').val();
     			$('#date_des').val(date_to_timestamp(date_val));
     		});
 
-    		$('#camelcase_transfer').click(function(){
+    		$('#camelcase_convert').click(function(){
     			var camelcase_val = $('#camelcase_src').val();
     			$('#camelcase_des').val(camelcase_to_hyphencase(camelcase_val));
     		});
+
+    		var int = self.setInterval(function(){
+    			var d = mill_timestamp();
+    			$('#current_time').text(d);
+    			$('#current_time_format').text(timestamp_to_date(d));
+    		}, 1000);
     	});
 
-    	// Transfer timestamp to date
+    	function component_init(){
+    		// value defind
+    		var timestamp = mill_timestamp();
+    		// initialize value
+    		$('#timestamp_src').val(timestamp);
+    		$('#date_src').val(timestamp_to_date(timestamp));
+    		$('#current_time').text(timestamp);
+			$('#current_time_format').text(timestamp_to_date(timestamp));
+    	}
+
+    	function mill_timestamp(){
+    		var mill_timestamp = new Date();
+    		return Math.round(mill_timestamp/1000);
+    	}
+
+    	// convert timestamp to date
     	function timestamp_to_date(timestamp_val){
     		timestamp_val = timestamp_val * 1000;
     		var date = new Date(timestamp_val);
@@ -138,7 +206,7 @@
     		return format_time;
     	}
 
-    	// Transfer date to timestamp
+    	// convert date to timestamp
     	function date_to_timestamp(date_val){
     		var date = new Date(date_val);
             var year = date.getFullYear();
@@ -161,7 +229,7 @@
     		return time;
     	}
 
-    	// Transfer camelcase to hyphencase
+    	// convert camelcase to hyphencase
     	function camelcase_to_hyphencase(camelcase_val){
     		var camelcase_array = camelcase_val.split('');
     		var hyphen_str = '';
